@@ -1,0 +1,9 @@
+
+#section-container section div button:hover { /* common effects for buttons */
+    scale: 1.05;
+    transition: 0.2s;
+}
+
+#section-container section:nth-child(2) div div { /* Used to change only one backgound in the sections (The Police section) */
+    background-color: #DFEFFF;
+}
