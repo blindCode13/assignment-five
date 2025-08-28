@@ -23,41 +23,84 @@ for (let item of sectionContents) {
             <h2 class="bg-[rgba(89,89,89,0.1)] px-4 py-1 rounded-3xl w-fit mb-6">${item.type}</h2>
             <div class="flex justify-between gap-2">
                 <button class="flex items-center justify-center gap-2 w-full py-2 border border-gray-300 rounded-lg cursor-pointer copy-btn"><img src="assets/copy.png" class="size-4">Copy</button>
-                <button class="flex items-center justify-center gap-2 w-full py-2 bg-[#00A63E] text-white rounded-lg cursor-pointer"><img src="assets/call.png" class="size-4">Call</button>
+                <button class="flex items-center justify-center gap-2 w-full py-2 bg-[#00A63E] text-white rounded-lg cursor-pointer call-btn"><img src="assets/call.png" class="size-4">Call</button>
             </div>
         </section>
-    `
+    `;
 }
 
-let favCount = document.getElementById('fav-count')
-let copyCount = document.getElementById('copy')
+let favCount = document.getElementById('fav-count');
+let copyCount = document.getElementById('copy');
+let coinSection = document.getElementById('coins');
 
-let favs = document.getElementsByClassName('fav')
-let copyBtns = document.getElementsByClassName('copy-btn')
+let favs = document.getElementsByClassName('fav');
+let copyBtns = document.getElementsByClassName('copy-btn');
+let callBtns = document.getElementsByClassName('call-btn');
+let historySection = document.getElementById('history');
+
+
+// History Clear Mechanism
+document.getElementById('clear-btn').addEventListener('click', () => {
+    if (historySection.innerHTML == "") {
+        alert("There is nothing to be cleared.")
+    }
+    else if (confirm("Are you sure to clear call history?")) {
+        historySection.innerHTML = "";
+    }
+})
 
 // Fav-Count Mechanism
 for (let item of favs) {
     item.addEventListener('click', () => {
     
             if (!item.hasAttribute('clicked')) {
-                item.setAttribute('src', 'assets/heart.png')
-                favCount.innerText = parseInt(favCount.innerText) + 1
-                item.setAttribute('clicked', true)
+                item.setAttribute('src', 'assets/heart.png');
+                favCount.innerText = parseInt(favCount.innerText) + 1;
+                item.setAttribute('clicked', true);
             }
             else {
-                item.removeAttribute('clicked')
-                item.setAttribute('src', 'assets/heart2.png')
-                favCount.innerText = parseInt(favCount.innerText) - 1
+                item.removeAttribute('clicked');
+                item.setAttribute('src', 'assets/heart2.png');
+                favCount.innerText = parseInt(favCount.innerText) - 1;
             }
 
     })
 }
 
-// copy mechanism
-for (let i = 0; i < copyBtns.length; i++) {
+// copy mechanism and calling machanism
+for (let i = 0; i < sectionContents.length; i++) {
+
     copyBtns[i].addEventListener('click', () => {
-        copyCount.innerHTML = parseInt(copyCount.innerText) + 1
-        alert(`phone number copied from ${sectionContents[i].heading}`)
-        navigator.clipboard.writeText(sectionContents[i].number)
+        copyCount.innerHTML = parseInt(copyCount.innerText) + 1;
+        navigator.clipboard.writeText(sectionContents[i].number);
+        alert(`phone number copied from ${sectionContents[i].heading}`);
+    })
+
+    callBtns[i].addEventListener('click', () => {
+        let currentCoin = parseInt(coinSection.innerText);
+        let date = new Date();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        let ampm = (hour >= 12) ? "PM" : "AM";
+
+
+            if (currentCoin >= 20) {
+                alert(`Calling to ${sectionContents[i].heading} (${sectionContents[i].number})`);
+                currentCoin -= 20;
+                coinSection.innerText = currentCoin;
+                historySection.innerHTML += `
+                    <div class="flex justify-between items-center gap-4 p-5 mt-5 w-full rounded-lg bg-[rgba(89,89,89,0.06)]">
+                        <div>
+                            <h1 class="font-bold text-xl">${sectionContents[i].heading}</h1>
+                            <h2>${sectionContents[i].number}</h2>
+                        </div>
+                        <h1 class="font-semibold">${hour}:${minute}:${second} ${ampm}</h1>
+                    </div>
+                `;
+            }
+            else {
+                alert("Not enough coins to call.");
+            }
     })
 }

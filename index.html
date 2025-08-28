@@ -48,13 +48,14 @@
         </section>
 
         <section class="bg-white p-8 rounded-xl h-full max-[768px]:order-first shadow-md">
-            <div class="flex justify-between">
+            <div class="flex justify-between gap-4 max-[420px]:flex-col max-[420px]:items-center">
                 <div class="flex gap-2 items-center">
                     <img src="assets/clock.png" class="size-6">
                     <h1 class="font-bold text-xl">Call History</h1>
                 </div>
-                <button class="flex gap-2 font-bold text-white px-6 py-2 bg-[#00A63E] rounded-[50px] cursor-pointer">Clear</button>
+                <button class="flex gap-2 font-bold text-white px-6 py-2 bg-[#00A63E] rounded-[50px] cursor-pointer" id="clear-btn">Clear</button>
             </div>
+            <div id="history"></div>
         </section>
     </main>
 
