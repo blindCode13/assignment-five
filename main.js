@@ -1,3 +1,6 @@
+let favCount = document.getElementById('fav-count')
+let favs = document.getElementsByClassName('fav')
+
 let sectionContents = [
     { heading: "National Emergency Number", title: "National Emergency", number: "999", type: "All", logo: "assets/emergency.png" },
     { heading: "Police Helpline Number", title: "Police", number: "999", type: "Police", logo: "assets/police.png" },
@@ -15,7 +18,7 @@ for (let item of sectionContents) {
         <section class="bg-white p-8 rounded-xl shadow-md">
             <div class="flex justify-between items-center mb-3">
                 <div class="p-4 bg-[#FFE3E2] rounded-xl"><img src="${item.logo}" class="size-8"></div>
-                <img src="assets/heart2.png" class="size-6">
+                <img src="assets/heart2.png" class="size-6 cursor-pointer fav">
             </div>
             <h1 class="font-bold text-2xl">${item.heading}</h1>
             <h2>${item.title}</h2>
@@ -27,4 +30,22 @@ for (let item of sectionContents) {
             </div>
         </section>
     `
+}
+
+// Fav-Count Mechanism
+for (let item of favs) {
+    item.addEventListener('click', () => {
+    
+            if (!item.hasAttribute('clicked')) {
+                item.setAttribute('src', 'assets/heart.png')
+                favCount.innerText = parseInt(favCount.innerText) + 1
+                item.setAttribute('clicked', true)
+            }
+            else {
+                item.removeAttribute('clicked')
+                item.setAttribute('src', 'assets/heart2.png')
+                favCount.innerText = parseInt(favCount.innerText) - 1
+            }
+
+    })
 }
