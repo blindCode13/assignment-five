@@ -1,6 +1,3 @@
-let favCount = document.getElementById('fav-count')
-let favs = document.getElementsByClassName('fav')
-
 let sectionContents = [
     { heading: "National Emergency Number", title: "National Emergency", number: "999", type: "All", logo: "assets/emergency.png" },
     { heading: "Police Helpline Number", title: "Police", number: "999", type: "Police", logo: "assets/police.png" },
@@ -25,12 +22,18 @@ for (let item of sectionContents) {
             <h1 class="font-bold text-3xl mt-4 mb-1">${item.number}</h1>
             <h2 class="bg-[rgba(89,89,89,0.1)] px-4 py-1 rounded-3xl w-fit mb-6">${item.type}</h2>
             <div class="flex justify-between gap-2">
-                <button class="flex items-center justify-center gap-2 w-full py-2 border border-gray-300 rounded-lg cursor-pointer"><img src="assets/copy.png" class="size-4">Copy</button>
+                <button class="flex items-center justify-center gap-2 w-full py-2 border border-gray-300 rounded-lg cursor-pointer copy-btn"><img src="assets/copy.png" class="size-4">Copy</button>
                 <button class="flex items-center justify-center gap-2 w-full py-2 bg-[#00A63E] text-white rounded-lg cursor-pointer"><img src="assets/call.png" class="size-4">Call</button>
             </div>
         </section>
     `
 }
+
+let favCount = document.getElementById('fav-count')
+let copyCount = document.getElementById('copy')
+
+let favs = document.getElementsByClassName('fav')
+let copyBtns = document.getElementsByClassName('copy-btn')
 
 // Fav-Count Mechanism
 for (let item of favs) {
@@ -47,5 +50,14 @@ for (let item of favs) {
                 favCount.innerText = parseInt(favCount.innerText) - 1
             }
 
+    })
+}
+
+// copy mechanism
+for (let i = 0; i < copyBtns.length; i++) {
+    copyBtns[i].addEventListener('click', () => {
+        copyCount.innerHTML = parseInt(copyCount.innerText) + 1
+        alert(`phone number copied from ${sectionContents[i].heading}`)
+        navigator.clipboard.writeText(sectionContents[i].number)
     })
 }
